@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS saves (
+  player TEXT PRIMARY KEY,
+  data JSONB,
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT now()
+);
