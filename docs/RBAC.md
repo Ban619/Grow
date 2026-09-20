@@ -1,4 +1,4 @@
-RBAC and Permissions
+auth
 
 Roles:
 - admin: full control (manage allowlists, roles, audit logs)
