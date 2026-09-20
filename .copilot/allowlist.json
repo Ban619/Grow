@@ -1,0 +1,14 @@
+{
+  "default": "deny",
+  "allowed_directories": [
+    "C:\\Users\\Administrator\\Documents\\Grow\\.github",
+    "C:\\Users\\Administrator\\Documents\\Grow\\docs"
+  ],
+  "allowed_tools": [
+    "git",
+    "powershell",
+    "gitleaks"
+  ],
+  "notes": "Update allowed entries via docs/RBAC.md. Enforced by agent config on deployment."
+}
+

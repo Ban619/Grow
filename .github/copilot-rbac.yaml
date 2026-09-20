@@ -1,0 +1,101 @@
+# Copilot CLI RBAC Configuration
+# Default-deny security model for agent permissions, tools, and directory access
+
+roles:
+  admin:
+    description: "Full access—development and testing only"
+    permissions:
+      - "*"
+    tools: ["*"]
+    directories: ["."]
+    max_concurrent_agents: 10
+    max_agent_timeout_seconds: 3600
+
+  developer:
+    description: "Permitted to run agents in dev workflow; limited tool access"
+    permissions:
+      - "agent:read"
+      - "agent:execute"
+      - "code:read"
+      - "code:write"
+      - "git:read"
+    tools:
+      - "bash"
+      - "grep"
+      - "view"
+      - "edit"
+      - "powershell"
+    directories:
+      - "src/"
+      - "docs/"
+      - "tests/"
+    max_concurrent_agents: 3
+    max_agent_timeout_seconds: 600
+    requires_approval: false
+
+  reviewer:
+    description: "Read-only access for code review and analysis"
+    permissions:
+      - "agent:read"
+      - "code:read"
+      - "git:read"
+      - "pr:read"
+    tools:
+      - "grep"
+      - "view"
+      - "task"  # read-only task status
+    directories:
+      - "src/"
+      - "tests/"
+      - "docs/"
+    max_concurrent_agents: 1
+    max_agent_timeout_seconds: 300
+    requires_approval: false
+
+  ci_runner:
+    description: "Automated CI/CD agent; constrained environment"
+    permissions:
+      - "agent:execute"
+      - "code:read"
+      - "git:write"
+    tools:
+      - "bash"
+      - "powershell"
+      - "grep"
+    directories:
+      - ".github/"
+      - "src/"
+      - "tests/"
+    max_concurrent_agents: 1
+    max_agent_timeout_seconds: 1800
+    requires_approval: false
+    sandbox: "strict"
+
+# Default role assignment (fallback)
+default_role: "reviewer"
+
+# Tool restrictions (even within a role, some tools require extra checks)
+tool_restrictions:
+  "delete":
+    min_role: "admin"
+    requires_approval: true
+  "secret_export":
+    min_role: "admin"
+    requires_approval: true
+  "allow-all":
+    min_role: "admin"
+    requires_approval: true
+
+# Audit logging
+audit:
+  enabled: true
+  log_file: ".logs/copilot-audit.log"
+  retention_days: 90
+  fields:
+    - timestamp
+    - user
+    - role
+    - action
+    - resource
+    - result
+    - duration_ms
