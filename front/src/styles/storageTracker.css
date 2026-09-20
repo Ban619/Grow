@@ -1,0 +1,208 @@
+/* Storage Tracker Widget - Right Edge HUD */
+
+.storage-tracker {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%);
+  border-radius: 12px;
+  padding: 12px;
+  width: 200px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.95);
+  z-index: 1000;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.tracker-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e0e0e0;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.tracker-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(240, 240, 240, 0.9) 100%);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.tracker-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 1) 0%, rgba(245, 245, 245, 1) 100%);
+}
+
+.barn-tracker {
+  border-left: 3px solid #A0522D;
+}
+
+.barn-tracker:hover {
+  background: linear-gradient(135deg, rgba(160, 82, 45, 0.05) 0%, rgba(139, 58, 29, 0.05) 100%);
+}
+
+.silo-tracker {
+  border-left: 3px solid #D2B48C;
+}
+
+.silo-tracker:hover {
+  background: linear-gradient(135deg, rgba(210, 180, 140, 0.05) 0%, rgba(188, 149, 111, 0.05) 100%);
+}
+
+.tracker-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #222;
+}
+
+.tracker-emoji {
+  font-size: 16px;
+}
+
+.tracker-name {
+  flex: 1;
+}
+
+.tracker-bar {
+  height: 8px;
+  background: #e8e8e8;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.tracker-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.3s ease, background-color 0.2s ease;
+  background: linear-gradient(90deg, #4CAF50, #45a049);
+}
+
+.barn-fill {
+  background: linear-gradient(90deg, #A0522D, #8B3A1D);
+}
+
+.silo-fill {
+  background: linear-gradient(90deg, #D2B48C, #BC956F);
+}
+
+.tracker-fill.warning {
+  background: linear-gradient(90deg, #FFA500, #FF8C00);
+}
+
+.tracker-fill.full {
+  background: linear-gradient(90deg, #E74C3C, #C0392B);
+  animation: pulse-fill 1s ease-in-out infinite;
+}
+
+@keyframes pulse-fill {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.1);
+  }
+}
+
+.tracker-text {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: #666;
+}
+
+.tracker-amount {
+  font-weight: 600;
+  color: #333;
+  font-size: 12px;
+}
+
+.tracker-percent {
+  background: rgba(0, 0, 0, 0.05);
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .storage-tracker {
+    right: 8px;
+    width: 180px;
+    padding: 10px;
+  }
+
+  .tracker-title {
+    font-size: 12px;
+  }
+
+  .tracker-item {
+    padding: 8px;
+  }
+
+  .tracker-label {
+    font-size: 12px;
+  }
+
+  .tracker-emoji {
+    font-size: 14px;
+  }
+}
+
+/* Mobile: Convert to bottom-center horizontal layout */
+@media (max-width: 480px) {
+  .storage-tracker {
+    position: fixed;
+    right: auto;
+    bottom: auto;
+    left: 50%;
+    top: auto;
+    transform: translateX(-50%) translateY(0);
+    width: 95vw;
+    max-width: 300px;
+    padding: 8px;
+    gap: 8px;
+  }
+
+  .tracker-item {
+    flex-direction: row;
+    align-items: center;
+    padding: 6px;
+    gap: 8px;
+  }
+
+  .tracker-label {
+    min-width: 70px;
+  }
+
+  .tracker-bar {
+    flex: 1;
+    min-width: 80px;
+  }
+
+  .tracker-text {
+    min-width: 70px;
+  }
+}
